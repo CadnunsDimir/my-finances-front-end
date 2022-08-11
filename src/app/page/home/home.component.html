@@ -1,0 +1,5 @@
+<mat-list role="list">
+    <mat-list-item *ngFor="let transation of transactions$ | async" role="listitem">
+        {{transation.date | date: 'dd/MM'}} {{transation.description}} {{transation.value | currency}}
+    </mat-list-item>
+</mat-list>

@@ -4,13 +4,22 @@
 
 import { of } from "rxjs";
 
+const mock = {
+  "http://localhost:8080/api/bank/transaction": {
+    get: [
+      {date: '2022-08-10', value: 20.30, description: 'teste'}
+    ]
+  }
+}
+
+
 const httpClientStub = {
-  get: () => of([{},{}])
+  get: (url) => of(mock[url]?.get)
 };
 
 export const environment = {
   production: false,
-  http: undefined
+  http: httpClientStub
 };
 
 /*

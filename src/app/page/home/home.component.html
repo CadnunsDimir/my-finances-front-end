@@ -1,5 +1,15 @@
-<mat-list role="list">
-    <mat-list-item *ngFor="let transation of transactions$ | async" role="listitem">
-        {{transation.date | date: 'dd/MM'}} {{transation.description}} {{transation.value | currency}}
-    </mat-list-item>
-</mat-list>
+<mat-tab-group mat-align-tabs="start">
+    <mat-tab *ngFor="let account of transactions$ | async" [label]="account.key">
+        <mat-card class="balance-card">Saldo Conta {{account.sum | currency}}</mat-card>
+        <mat-list role="list">
+            <mat-list-item *ngFor="let transation of account.itens" role="listitem">
+                {{transation.date | date: 'dd/MM'}} 
+                {{transation.description}} 
+                {{transation.value | currency}}
+            </mat-list-item>
+        </mat-list>
+    </mat-tab>
+    <mat-tab label="Minhas Despesas">
+       montar lista de despesas
+    </mat-tab>
+</mat-tab-group>

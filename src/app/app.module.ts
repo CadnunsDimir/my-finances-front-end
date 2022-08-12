@@ -1,5 +1,6 @@
-import { HttpClient } from '@angular/common/http';
-import { NgModule } from '@angular/core';
+import { registerLocaleData } from '@angular/common';
+import { HttpClient, HttpHandler } from '@angular/common/http';
+import { LOCALE_ID, DEFAULT_CURRENCY_CODE, NgModule, Provider } from '@angular/core';
 import { of } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { AppRoutingModule } from './app-routing.module';
@@ -7,7 +8,20 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from './page/home/home.component';
 import { AngularModules, MaterialModules } from './shared/shared.modules';
 
+import localePt from '@angular/common/locales/pt';
 
+registerLocaleData(localePt);
+
+const HttpClientCustomProvider: Provider = {
+  provide: HttpClient,
+  deps: [HttpHandler],
+  useFactory: (handler: HttpHandler)=> {
+    if(!environment.http)
+      return new HttpClient(handler);
+    console.log("[MOCK] Providing HttpClient");
+    return environment.http;
+  }
+}
 
 @NgModule({
   declarations: [
@@ -19,7 +33,11 @@ import { AngularModules, MaterialModules } from './shared/shared.modules';
     ...AngularModules,
     ...MaterialModules
   ],
-  providers: [{provide: HttpClient, useExisting: environment.http}],
+  providers: [
+    HttpClientCustomProvider, 
+    { provide: LOCALE_ID, useValue: 'pt-BR' },
+    { provide: DEFAULT_CURRENCY_CODE, useValue: "BRL" },
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

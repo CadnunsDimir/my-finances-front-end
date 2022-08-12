@@ -7,7 +7,10 @@ import { of } from "rxjs";
 const mock = {
   "http://localhost:8080/api/bank/transaction": {
     get: [
-      {date: '2022-08-10', value: 20.30, description: 'teste'}
+      { date: '2022-08-10', value: 20.30, description: 'teste', account : { id: 0, description: "Inter"}},
+      { date: '2022-08-10', value: 20.30, description: 'teste', account : { id: 0, description: "Inter"}},
+      { date: '2022-08-10', value: 20.30, description: 'teste', account : { id: 0, description: "Inter"}},
+      { date: '2022-08-10', value: 20.30, description: 'teste', account : { id: 0, description: "Bradesco"}}
     ]
   }
 }

@@ -1,7 +1,6 @@
 import { registerLocaleData } from '@angular/common';
 import { HttpClient, HttpHandler } from '@angular/common/http';
 import { LOCALE_ID, DEFAULT_CURRENCY_CODE, NgModule, Provider } from '@angular/core';
-import { of } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -9,6 +8,7 @@ import { HomeComponent } from './page/home/home.component';
 import { AngularModules, MaterialModules } from './shared/shared.modules';
 
 import localePt from '@angular/common/locales/pt';
+import { ExpensesTableComponent } from './shared/component/expenses-table/expenses-table.component';
 
 registerLocaleData(localePt);
 
@@ -26,7 +26,8 @@ const HttpClientCustomProvider: Provider = {
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent
+    HomeComponent,
+    ExpensesTableComponent
   ],
   imports: [
     AppRoutingModule,

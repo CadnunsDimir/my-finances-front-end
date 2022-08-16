@@ -1,3 +1,5 @@
+{{transactions$ | async | json}}
+
 <mat-tab-group mat-align-tabs="start">
     <mat-tab *ngFor="let account of transactions$ | async" [label]="account.key">
         <mat-card class="balance-card">Saldo Conta {{account.sum | currency}}</mat-card>
@@ -10,6 +12,6 @@
         </mat-list>
     </mat-tab>
     <mat-tab label="Minhas Despesas">
-       montar lista de despesas
+       <app-expense-table></app-expense-table>
     </mat-tab>
 </mat-tab-group>

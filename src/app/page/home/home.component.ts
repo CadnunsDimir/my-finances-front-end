@@ -11,7 +11,6 @@ import { Transaction } from 'src/app/shared/model/transaction.model';
 })
 export class HomeComponent implements OnInit {
   transactions$: any;
-  transactions: Transaction[];
 
   constructor(private service: TransactionService) { }
 
@@ -30,7 +29,6 @@ export class HomeComponent implements OnInit {
         });
         return groups;
       }),
-      tap(x=> this.transactions = x[0]?.itens)
     );
   }
 

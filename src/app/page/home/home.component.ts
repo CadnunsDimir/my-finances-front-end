@@ -23,21 +23,21 @@ export class HomeComponent implements OnInit {
       {
         description : "Conta de água",
         expirationDay: 15,
-        isPayed: false,
+        isPaid: false,
         type: 'bill',
         value: 150
       },
       {
         description : "Conta de interne",
         expirationDay: 10,
-        isPayed: false,
+        isPaid: false,
         type: 'bill',
         value: 125
       },
       {
         description : "Conta de água",
         expirationDay: 5,
-        isPayed: false,
+        isPaid: false,
         type: 'investment',
         value: 150
       }

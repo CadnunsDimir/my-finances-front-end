@@ -4,6 +4,6 @@ export interface Expense {
     description: string,
     value: number,
     expirationDay: number,
-    isPayed: boolean,
+    isPaid: boolean,
     type: ExpenseType
 }

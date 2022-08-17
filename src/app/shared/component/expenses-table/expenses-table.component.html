@@ -1,0 +1,18 @@
+<mat-card class="sum-card">
+    <p>Despesas a pagar: {{expensesToPay | currency}}</p>
+</mat-card>
+
+<div *ngIf="hasValue else empty">
+    <mat-card class="expense-card" *ngFor="let expense of _expenses">
+        <p class="category">{{expenseTypePtBR[expense.type]}}</p>
+        <p>{{expense.description}} (vence dia {{expense.expirationDay}}) {{expense.value | currency}}
+            <mat-checkbox [(ngModel)]="expense.isPaid" class="checkbox" (change)="sort()"></mat-checkbox>
+        </p>
+    </mat-card>
+</div>
+
+<ng-template #empty>
+    <mat-card class="no-itens-card">
+        <p>ops não temos despesas! :D cadastre algumas</p>
+    </mat-card>
+</ng-template>

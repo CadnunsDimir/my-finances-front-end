@@ -3,6 +3,8 @@ import { TransactionService } from 'src/app/shared/service/transaction.service';
 import { map, tap } from 'rxjs/operators'
 import { Account } from 'src/app/shared/model/account.model';
 import { Transaction } from 'src/app/shared/model/transaction.model';
+import { groupByAccount } from 'src/app/shared/selector/transaction.selector';
+import { Expense } from 'src/app/shared/model/expense.model';
 
 @Component({
   selector: 'app-home',
@@ -11,27 +13,34 @@ import { Transaction } from 'src/app/shared/model/transaction.model';
 })
 export class HomeComponent implements OnInit {
   transactions$: any;
-  transactions: Transaction[];
+  expenses: Expense[];
 
   constructor(private service: TransactionService) { }
 
   ngOnInit(): void {
-    this.transactions$ = this.service.get().pipe(
-      map(list=> {
-        const groups: { key: string, sum: number, itens: Transaction[] }[] = [];
-        list.forEach(x=> {
-          let group = groups.find(y=>y.key === x.account.description);
-          if(!group){
-            group = { key: x.account.description, sum: 0, itens: [] };
-            groups.push(group);
-          }
-          group.itens.push(x);
-          group.sum += x.value;
-        });
-        return groups;
-      }),
-      tap(x=> this.transactions = x[0]?.itens)
-    );
+    this.transactions$ = this.service.get().pipe(groupByAccount());
+    this.expenses = [
+      {
+        description : "Conta de água",
+        expirationDay: 15,
+        isPaid: false,
+        type: 'bill',
+        value: 150
+      },
+      {
+        description : "Conta de interne",
+        expirationDay: 10,
+        isPaid: false,
+        type: 'bill',
+        value: 125
+      },
+      {
+        description : "Conta de água",
+        expirationDay: 5,
+        isPaid: false,
+        type: 'investment',
+        value: 150
+      }
+    ] as Expense[]
   }
-
 }

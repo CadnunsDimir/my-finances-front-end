@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { arrays } from '../../array.functions';
 import { expenseTypePtBR } from '../../i18n.consts';
 import { Expense } from '../../model/expense.model';
 
@@ -11,10 +12,12 @@ export class ExpensesTableComponent implements OnInit {
   
   private _expenses: Expense[];
   expensesToPay: number;
+  expensesPaid: number;
+  sumInvestment: number;
 
   @Input() set expenses(expenses: Expense[]) {
     this._expenses = this.orderByExpirationDayAndIsPaid(expenses);
-    this.sumUnpaidValue();
+    this.sumStats();
   }
 
   expenseTypePtBR = expenseTypePtBR;
@@ -30,7 +33,7 @@ export class ExpensesTableComponent implements OnInit {
 
   sort() {
     this._expenses = this.orderByExpirationDayAndIsPaid(this._expenses);
-    this.sumUnpaidValue();
+    this.sumStats();
   }
 
   private orderByExpirationDayAndIsPaid(expenses: Expense []) {
@@ -39,11 +42,10 @@ export class ExpensesTableComponent implements OnInit {
       .sort((a,b)=> Number(a.isPaid)-Number(b.isPaid));
   }
 
-  private sumUnpaidValue() {
-    this.expensesToPay = 0;
-    this._expenses.forEach(expense=> {
-      if(!expense.isPaid)
-        this.expensesToPay+= expense.value;
-    })
-  }
+  private sumStats() {
+    const selectValue = (x: Expense) => x.value;
+    this.expensesToPay = arrays.sum(this._expenses, x=> !x.isPaid, selectValue);
+    this.expensesPaid = arrays.sum(this._expenses, x=> x.isPaid && x.type === 'bill', selectValue);
+    this.sumInvestment = arrays.sum(this._expenses, x=> x.isPaid && x.type === 'investment', selectValue);
+  };
 }

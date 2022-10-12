@@ -1,11 +1,11 @@
 <mat-card class="sum-card">
-    <p *ngIf="expensesToPay">Despesas a pagar: {{expensesToPay | currency}}</p>
-    <p *ngIf="expensesPaid">Seus gastos somam {{expensesPaid | currency}}</p>
-    <p *ngIf="sumInvestment">Você investiu {{sumInvestment | currency}} esse mês, Parabéns!</p>
+    <p *ngIf="expensesToPay$ | async as expensesToPay">Despesas a pagar: {{expensesToPay | currency}}</p>
+    <p *ngIf="expensesPaid$">Seus gastos somam {{expensesPaid$ | async | currency}}</p>
+    <p *ngIf="sumInvestment$">Você investiu {{sumInvestment$ | async | currency}} esse mês, Parabéns!</p>
 </mat-card>
 
-<div *ngIf="hasValue else empty">
-    <mat-card class="expense-card" *ngFor="let expense of _expenses">
+<div *ngIf="expensesOrdered$ | async as expenses">
+    <mat-card class="expense-card" *ngFor="let expense of expenses">
         <p class="category">{{expenseTypePtBR[expense.type]}}</p>
         <p>{{expense.description}} (vence dia {{expense.expirationDay}}) {{expense.value | currency}}
             <mat-checkbox [(ngModel)]="expense.isPaid" class="checkbox" (change)="sort()"></mat-checkbox>
